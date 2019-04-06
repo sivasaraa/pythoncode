@@ -75,3 +75,9 @@ x = np.array([1,1,2,2,2,4,4,5,6,6,6])
 count,bin = np.histogram(x,[0,2,4,6,7])
 print("count",count)
 print("bin count",bin)
+
+print("coursera questions")
+arr1 = np.arange(36)[::7]
+print(arr1)
+arr2 = np.arange(36).reshape(6,6)
+print(arr2[2:4,2:4])
