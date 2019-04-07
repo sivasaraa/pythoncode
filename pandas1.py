@@ -143,4 +143,3 @@ census.set_index(['STNAME','CTYNAME'],inplace=True)
 print(census.head())
 print(census.loc['Alabama','Autauga County'])
 print(census.loc[[('Alabama','Autauga County'),('Alabama','Baldwin County')]])
-
