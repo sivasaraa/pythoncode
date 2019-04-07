@@ -1,41 +1,31 @@
 import csv
 
-
 with open('mpg.csv') as csvfile:
-    mpgs = list(csv.DictReader(csvfile))
+    mpgfile = list(csv.DictReader(csvfile))
 
+print(len(mpgfile))
+print(mpgfile[0].keys())
 
-print("no of rows",len(mpgs))
-print("list of column names",mpgs[0].keys())
+avgmpg = sum(float(d['mpg']) for d in mpgfile)/len(mpgfile)
+print("average milege",avgmpg)
 
-print("avg city milege")
-print(sum(float(d['mpg']) for d in mpgs)/len(mpgs))
+unicyl = set(d['cylinders'] for d in mpgfile)
+print("unique cylinders",unicyl )
 
-print("milege calculatoion based on cylinders")
-result = [];
-cyl = set(d['cylinders'] for d in mpgs)
-for c in cyl:
-    totalmpg = 0
-    count = 0
-    for d in mpgs:
-        if d['cylinders'] == c:
-            totalmpg += float(d['mpg'])
-            count+=1
-    result.append((c,totalmpg/count))
+print("finding the milege based on the cylinder")
 
-result.sort(key=lambda s:s[0])
-print(result)
-
-print("milege based on vehicle")
-veh = set(d['name'] for d in mpgs)
 result = []
-for v in veh:
+for cyl in unicyl:
     totalmpg = 0
     count = 0
-    for d in mpgs:
-        if d['name'] == v:
+    for d in mpgfile:
+        if d['cylinders'] == cyl:
             totalmpg += float(d['mpg'])
             count += 1
-    result.append((v,totalmpg/count))
-result.sort()
-print(result)
+    result.append((cyl,totalmpg/count))
+print("final result=",result)
+
+
+
+
+
