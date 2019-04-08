@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 df = pd.DataFrame([{'Name': 'Chris', 'Item Purchased': 'Sponge', 'Cost': 22.50},
                    {'Name': 'Kevyn', 'Item Purchased': 'Kitty Litter', 'Cost': 2.50},
@@ -47,3 +48,30 @@ student_df = pd.DataFrame([{'First Name': 'James', 'Last Name': 'Hammond', 'Scho
                            {'First Name': 'Sally', 'Last Name': 'Brooks', 'School': 'Engineering'}])
 print("join by first and last name")
 print(pd.merge(staff_df,student_df,how='inner',left_on=['First Name','Last Name'],right_on=['First Name','Last Name']))
+
+
+
+# idiomatic pandas
+df = pd.read_csv('census.csv')
+print(df.head())
+df.where(df['SUMLEV'] == 50).dropna().set_index(['STNAME','CTYNAME'])\
+    .rename(columns={'ESTIMATESBASE2010': 'Estimates Base 2010'})
+
+def min_max(row):
+    data = row[['POPESTIMATE2010',
+                'POPESTIMATE2011',
+                'POPESTIMATE2012',
+                'POPESTIMATE2013',
+                'POPESTIMATE2014',
+                'POPESTIMATE2015']]
+    return pd.Series({'min':np.min(data),'max':np.max(data)})
+
+df.head().apply(min_max,axis=1)
+
+rows = ['POPESTIMATE2010',
+        'POPESTIMATE2011',
+        'POPESTIMATE2012',
+        'POPESTIMATE2013',
+        'POPESTIMATE2014',
+        'POPESTIMATE2015']
+print(df.head().apply(lambda x: np.max(x[rows]), axis=1))
